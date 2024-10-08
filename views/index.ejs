@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="../static/style.css">
+   
+</head>
+<body>
+    <button><a href="http://localhost:3000/tarefas">Exibir Tarefas</a></button>
+
+    <button><a href="">Exibir Tarefas</a></button>
+    <h1>Inserir Tarefa</h1>
+    <form action="">
+        <input type="text" required placeholder="Id..." name="id" id="id">
+        <input type="text" required name="nome" placeholder="Nome da tarefa..." id="nome">
+        <input type="text" name="status" placeholder="status..." id="status">
+        <button type="submit" on id="inserir" >Inserir</button>
+    </form>
+    <p id="erro">  </p>
+</body>
+<script>
+    const inserir = document.getElementById('inserir');
+    inserir.addEventListener('click',() => {
+        const id = document.getElementById('id').value;
+        const tarefa = document.getElementById('nome').value;
+        const status = document.getElementById('status').value;
+        const erro = document.getElementById('erro');
+        console.log(id,tarefa,status);
+        if (id === '' || tarefa === '') {
+            erro.innerHTML = 'Preencha ao menos tarefa ou id';
+            return;}
+        else if (status === ""){
+            fetch(`http://localhost:3000/tarefas?id=${id}&tarefa=${tarefa}`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }})
+        .then(response => response.json())
+        .then(data => console.log(data))
+        }
+        else {
+        fetch(`http://localhost:3000/tarefas?id=${id}&tarefa=${tarefa}&status=${status}`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }})
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => erro.innerHTML = err)
+        }
+    })
+</script>
+</html>
