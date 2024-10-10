@@ -1,3 +1,55 @@
 a {
     text-decoration: none;
+    padding: 2.5px;
+}
+
+body{
+    text-align: center;
+    margin-top: 40px;
+    background-color: rgb(43, 53, 50);
+}
+h1{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(255, 255, 255);
+}
+.erro {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: crimson;
+}
+.sucesso{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: green;
+}
+#true{
+    color: rgb(255, 255, 255);
+    border: 5px solid rgb(72, 72, 211);
+    font-family: 'trebuchet MS';
+    background-color:  rgb(72, 72, 211);
+    border-radius: 15px;
+}
+#true:hover{
+    background-color: rgb(32, 32, 78);
+    border: 5px solid  rgb(32, 32, 78);
+}
+#false{
+    color: rgb(255, 255, 255);
+    border: 5px solid rgb(134, 42, 26);
+    font-family: 'trebuchet MS';
+    background-color:   rgb(134, 42, 26);
+    border-radius: 15px;
+}
+#false:hover{
+    background-color: rgb(78, 24, 15);
+    border: 5px solid  rgb(78, 24, 15);
+}
+#exibirtarefas{
+    color: rgb(255, 255, 255);
+    border: 5px solid rgb(112, 112, 112);
+    font-family: 'trebuchet MS';
+    background-color:  rgb(104, 103, 103);
+    border-radius: 15px;
+}
+#exibirtarefas:hover{
+    background-color: rgb(25, 25, 25);
+    border: 5px solid  rgb(25, 25, 25);
 }

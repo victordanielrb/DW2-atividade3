@@ -8,17 +8,36 @@
    
 </head>
 <body>
-    <button><a href="http://localhost:3000/tarefas">Exibir Tarefas</a></button>
+    <div>
+        <a id="exibirtarefas" href="http://localhost:3000/tarefas">Exibir Tarefas</a>
 
-    <button><a href="">Exibir Tarefas</a></button>
-    <h1>Inserir Tarefa</h1>
-    <form action="">
-        <input type="text" required placeholder="Id..." name="id" id="id">
-        <input type="text" required name="nome" placeholder="Nome da tarefa..." id="nome">
-        <input type="text" name="status" placeholder="status..." id="status">
-        <button type="submit" on id="inserir" >Inserir</button>
+        <a id="false" href="http://localhost:3000/tarefas?status=false">Tarefas : status = false</a>
+        <a id="true" href="http://localhost:3000/tarefas?status=true">Tarefas : status = true</a>
+    </div>
+    <div>  
+        <h1>Inserir Tarefa</h1>
+        <form method="post">
+            <input type="text" required placeholder="Id..." name="id" id="id">
+            <input type="text" required name="nome" placeholder="Nome da tarefa..." id="nome">
+            <input type="text" name="status" placeholder="status..." id="status">
+            <button type="button" on id="inserir" >Inserir</button>
+        </form>
+       
+        <p class="erro">  </p>
+        <p class="sucesso"></p>
+    </div>
+    <h1>Atualizar tarefas</h1>
+    <form method="put">
+        <input type="text" required placeholder="Id..." name="id" id="id2">
+        <input type="text" required name="nome" placeholder="Nome da tarefa..." id="nome2">
+        <input type="text" name="status" placeholder="status..." id="status2">
+        <button type="button"  on id="inserir2" >atualizar</button>
     </form>
-    <p id="erro">  </p>
+    <p class="erro">  </p>
+    <p class="sucesso"></p>
+    <h1>Deletar Tarefas</h1><form action="" method="DELETE"><input id="deletar" type="text"><button id="deletarbtn" type="button">Deletar</button></form>
+    <p class="erro">  </p>
+    <p class="sucesso"></p>
 </body>
 <script>
     const inserir = document.getElementById('inserir');
@@ -27,6 +46,9 @@
         const tarefa = document.getElementById('nome').value;
         const status = document.getElementById('status').value;
         const erro = document.getElementById('erro');
+        const sucesso = document.getElementById('sucesso')
+        sucesso.innerHTML=""
+        erro.innerHTML=""
         console.log(id,tarefa,status);
         if (id === '' || tarefa === '') {
             erro.innerHTML = 'Preencha ao menos tarefa ou id';
@@ -38,18 +60,133 @@
                 'Content-Type': 'application/json'
             }})
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data);
+           
+            if (data['SUCCESS']!=undefined) {
+            sucesso.innerHTML = data['SUCCESS']}
+            else if (data['ERRO']!=undefined) {
+            erro.innerHTML = data['ERRO']
+        }
+        })
+        .catch(err =>{
+            console.log(err);
+            erro.innerHTML = err
+        })
         }
         else {
-        fetch(`http://localhost:3000/tarefas?id=${id}&tarefa=${tarefa}&status=${status}`,{
+            fetch(`http://localhost:3000/tarefas?id=${id}&tarefa=${tarefa}&status=${status}`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             }})
         .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => erro.innerHTML = err)
+        .then(data => {
+            console.log(data);
+           
+            if (data['SUCCESS']!=undefined) {
+            sucesso.innerHTML = data['SUCCESS']}
+            else if (data['ERRO']!==undefined) {
+            erro.innerHTML = data['ERRO']
         }
+        })
+        .catch(err =>{
+            console.log(err);
+            erro.innerHTML = err
+        })
+        
+        }
+    })
+    const inserir2 = document.getElementById('inserir2');
+    inserir2.addEventListener('click',() => {
+        const id = document.getElementById('id2').value;
+        const tarefa = document.getElementById('nome2').value;
+        const status = document.getElementById('status2').value;
+        const erro2 = document.getElementById('erro2');
+        const sucesso2 = document.getElementById('sucesso2')
+        sucesso2.innerHTML=""
+        erro2.innerHTML=""
+        console.log(id,tarefa,status);
+        if (id === '' || tarefa === '') {
+            erro2.innerHTML = 'Preencha ao menos tarefa ou id';
+            return;}
+        else if (status === ""){
+            fetch(`http://localhost:3000/tarefas/${id}?tarefa=${tarefa}`,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }})
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+           
+            if (data['SUCCESS']!==undefined) {
+            sucesso2.innerHTML = data['SUCCESS']
+        console.log(data['SUCCESS']);
+        }
+            else if (data['ERRO']!==undefined) {
+            erro2.innerHTML = data['ERRO']
+        }
+        })
+        .catch(err =>{
+            console.log(err);
+            erro2.innerHTML = err
+        })
+        }
+        else {
+            fetch(`http://localhost:3000/tarefas/${id}?tarefa=${tarefa}&status=${status}`,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }})
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+           
+            if (data['SUCCESS']!==undefined) {
+            sucesso2.innerHTML = data['SUCCESS']}
+            else if (data['ERRO']!==undefined) {
+            erro2.innerHTML = data['ERRO']
+        }
+        })
+        .catch(err =>{
+            console.log(err);
+            erro2.innerHTML = err
+        })
+        
+        }
+    })
+    
+    const deletarbtn = document.getElementById('deletarbtn');
+    deletarbtn.addEventListener('click',() => {
+        const deletar = document.getElementById('deletar').value;
+        sucesso3 = document.getElementById('sucesso3')
+        erro3 = document.getElementById('erro3')
+        sucesso3.innerHTML=""
+        erro3.innerHTML=""
+        
+            fetch(`http://localhost:3000/tarefas/${deletar}`,{
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }})
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+           
+            if (data['SUCCESS']!==undefined) {
+            sucesso3.innerHTML = data['SUCCESS']
+        console.log(data['SUCCESS']);
+        }
+            else if (data['ERRO']!==undefined) {
+            erro3.innerHTML = data['ERRO']
+        }
+        })
+        .catch(err =>{
+            console.log(err);
+            erro3.innerHTML = err
+        })
+        
     })
 </script>
 </html>

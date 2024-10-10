@@ -13,23 +13,27 @@ app.get('/', (req, res) => {
 
 });
 app.get('/tarefas', (req, res) => {
+    console.log(req.query.status);
+    
     if (req.query.status===undefined ) {
         
         return res.send(tarefas);
     }
-    else if (req.query.status === 'true' || req.query.status === 'false') {
-        let status = req.query.status;
+    else if (req.query.status === 'true' || req.query.status == 'false') {
+        const status = req.query.status === "true";
+        console.log(status);
         let filtro = Object.entries(tarefas)
             .filter(([key, value]) => value.status === status)
             .reduce((acc, [key, value]) => {
                 acc[key] = value;
                 return acc;
             }, {});
+            console.log(filtro);
         return res.send(filtro);
     }
     else if (req.query.status !== 'true' || req.query.status !== 'false') {
         
-            return res.send("ERRO: O valor do status deve ser true ou false");
+            return res.send({ERRO: "O valor do status deve ser true ou false"});
     }
     return res.send(tarefas);
 });
@@ -48,18 +52,18 @@ app.post('/tarefas', (req, res) => {
             else{
                 console.log("ERRO: Id ou nome de tarefa já existente já existe");
                 
-                return res.send("ERRO: Este nome de tarefas já existe");  
+                return res.status(404).json({ERRO: "Este nome de tarefas já existe"});  
                 
                
             }  
            
         }
         tarefas[id] = {tarefa, status};
-        return res.send("Tarefa inserida com sucesso");}
+        return res.status(200).json({SUCCESS: "Tarefa inserida com sucesso !" });}
     else if (tarefas[id] != undefined){
         console.log("ERRO: Tarefa já existe");
         
-        return res.send("ERRO: Tarefa já existe");
+        return res.status(404).json({ERRO: "Esta tarefa já existe"});  
     }
 });
 
@@ -68,7 +72,7 @@ app.put('/tarefas/:id', (req, res) => {
     let tarefa = req.query.tarefa;
     let status = Boolean(req.query.status) || false;
     if (tarefas[id] == undefined){
-        res.send("ERRO: Tarefa não existe");
+        res.status(404).json({ERRO: "Tarefa não existe"});
     }
     else{
         for (let key in tarefas){
@@ -77,27 +81,23 @@ app.put('/tarefas/:id', (req, res) => {
             }
             else{
                 console.log("ERRO: Este nome de tarefa já existe");
-                
-                return res.send("ERRO: Este nome de tarefas já existe");  
-                
-               
+                return res.status(404).json({ERRO: "Este nome de tarefas já existe"});  
             }  
-           
         }
         tarefas[id] = {tarefa, status};
-        return res.send("Tarefa atualizada com sucesso");
+        return res.status(200).json({SUCESS: "Tarefa atualizada com sucesso"}); 
     }
 });
 app.delete('/tarefas/:id', (req, res) => {
     let id = req.params.id;
-    
+    console.log(id);
     
     if (tarefas[id] == undefined){
-        return res.send("ERRO: Tarefa não existe");
+        return res.status(400).json({ERRO: "Tarefa não existe"});
     }
     else{
         delete tarefas[id];
-        return res.send("Tarefa deletada com sucesso");
+        return res.status(200).json({SUCESS: "Tarefa deletada com sucesso"}); 
     }
 });
 app.listen(port, () => {
