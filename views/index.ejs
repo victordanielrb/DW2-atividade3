@@ -23,8 +23,8 @@
             <button type="button" on id="inserir" >Inserir</button>
         </form>
        
-        <p class="erro">  </p>
-        <p class="sucesso"></p>
+        <p id="erro" class="erro">  </p>
+        <p class="sucesso" id="sucesso"></p>
     </div>
     <h1>Atualizar tarefas</h1>
     <form method="put">
@@ -33,11 +33,11 @@
         <input type="text" name="status" placeholder="status..." id="status2">
         <button type="button"  on id="inserir2" >atualizar</button>
     </form>
-    <p class="erro">  </p>
-    <p class="sucesso"></p>
+    <p class="erro" id="erro2">  </p>
+    <p class="sucesso" id="sucesso2"></p>
     <h1>Deletar Tarefas</h1><form action="" method="DELETE"><input id="deletar" type="text"><button id="deletarbtn" type="button">Deletar</button></form>
-    <p class="erro">  </p>
-    <p class="sucesso"></p>
+    <p class="erro" id="erro3">  </p>
+    <p class="sucesso" id="sucesso3"></p>
 </body>
 <script>
     const inserir = document.getElementById('inserir');
@@ -160,8 +160,8 @@
     const deletarbtn = document.getElementById('deletarbtn');
     deletarbtn.addEventListener('click',() => {
         const deletar = document.getElementById('deletar').value;
-        sucesso3 = document.getElementById('sucesso3')
-        erro3 = document.getElementById('erro3')
+        const sucesso3 = document.getElementById('sucesso3')
+        const erro3 = document.getElementById('erro3')
         sucesso3.innerHTML=""
         erro3.innerHTML=""
         
