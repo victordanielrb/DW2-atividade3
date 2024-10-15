@@ -43,7 +43,7 @@ app.post('/tarefas', (req, res) => {
     
     let id = req.query.id;
     let tarefa = req.query.tarefa;
-    let status = req.query.status === "True"
+    let status = req.query.status === "true"
     if (tarefas[id] == undefined){
         for (let key in tarefas){
             if(tarefas[key].tarefa != tarefa || key === id){
